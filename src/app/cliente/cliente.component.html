@@ -1,0 +1,42 @@
+<div class="card border-dark mb-3">
+  <div class="card-header">Clientes</div>
+  <div class="card-body text-dark">
+    <h5 class="card-title">Listado de clientes</h5>
+    <div class="my-2 text-left">
+      <button type="button" class="btn btn-rounded btn-primary" [routerLink]="['/clientes/form']" >Crear cliente</button>
+    </div>
+    <div *ngIf="clientes?.length == 0 else elseBlock" class="alert alert-info">No hay registros en la base de datos</div>
+    <ng-template #elseBlock>
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Email</th>
+            <th>Fecha</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let cliente of clientes">
+            <td><button type="button" class="btn btn-success" [routerLink]="['/clientes/ver', cliente.id]">{{ cliente.id }}</button></td>
+            <td>{{ cliente.nombre }}</td>
+            <td>{{ cliente.apellido }}</td>
+            <td>{{ cliente.email }}</td>
+            <td>{{ cliente.createAt | date: 'longDate' }}</td>
+            <td>
+              <button type="button" name="editar" [routerLink]="['/clientes/form', cliente.id]" class="btn btn-primary btn-sm">Editar</button>
+            </td>
+            <td>
+              <button type="button" name="eliminar" (click)='delete(cliente)' class="btn btn-danger btn-sm">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <paginator-nav *ngIf="paginador" [paginador]="paginador"></paginator-nav>
+    </ng-template>
+    
+  </div>
+</div>
